@@ -1,24 +1,22 @@
 package com.example.chucknorrisjokes.controllers;
 
 import com.example.chucknorrisjokes.services.JokeService;
-import guru.springframework.norris.chuck.ChuckNorrisQuotes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class ChuckNorrisJokeService implements JokeService {
+public class ChuckNorrisJokeService{
 
-    ChuckNorrisQuotes chuckNorrisQuotes;
+    private final JokeService jokeService;
 
-    public ChuckNorrisJokeService(){
-        chuckNorrisQuotes = new ChuckNorrisQuotes();
+    public ChuckNorrisJokeService(JokeService jokeService){
+        this.jokeService = jokeService;
     }
 
-    @Override
     @RequestMapping("/")
     public String generateJoke(Model model) {
-        String randomJoke = chuckNorrisQuotes.getRandomQuote();
+        String randomJoke = jokeService.generateJoke();
         model.addAttribute("joke", randomJoke);
         return "index";
     }
